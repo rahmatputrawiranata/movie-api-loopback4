@@ -1,0 +1,13 @@
+{
+  "ids": {
+    "User": 2
+  },
+  "models": {
+    "User": {
+      "1": {
+        "username": "myrepublic",
+        "password": "$2a$10$eynddp84t3XL/XeO/VfHz.QM0Z8PnONbfZ//yftseBYrUg3umJnY2"
+      }
+    }
+  }
+}

@@ -1,14 +1,16 @@
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
+import {RepositoryMixin} from '@loopback/repository';
+import {RestApplication} from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
+import {JWTMiddleware} from './middleware/jwt.middleware';
 import {MySequence} from './sequence';
+import {UserService} from './services';
 
 export {ApplicationConfig};
 
@@ -18,6 +20,7 @@ export class MovieApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
+    this.middleware(JWTMiddleware);
     // Set up the custom sequence
     this.sequence(MySequence);
 
@@ -40,5 +43,7 @@ export class MovieApplication extends BootMixin(
         nested: true,
       },
     };
+    this.bind('authentication.jwt.secret').to('myrepublic');
+    this.bind(UserService.name).toClass(UserService)
   }
 }
